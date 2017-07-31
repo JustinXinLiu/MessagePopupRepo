@@ -1,0 +1,91 @@
+﻿<UserControl x:Class="MessagePopupRepo.MessageControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="using:MessagePopupRepo"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             d:DesignHeight="300"
+             d:DesignWidth="400"
+             Background="LimeGreen"
+             Foreground="White"
+             VerticalAlignment="Top"
+             IsHitTestVisible="False"
+             Opacity="0.9">
+    <UserControl.Resources>
+        <Storyboard x:Name="ShowAnimation">
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)"
+                                           Storyboard.TargetName="Root">
+                <EasingDoubleKeyFrame KeyTime="0:0:0.4"
+                                      Value="1">
+                    <EasingDoubleKeyFrame.EasingFunction>
+                        <CubicEase EasingMode="EaseOut" />
+                    </EasingDoubleKeyFrame.EasingFunction>
+                </EasingDoubleKeyFrame>
+                <EasingDoubleKeyFrame KeyTime="0:0:3.4"
+                                      Value="1" />
+                <EasingDoubleKeyFrame KeyTime="0:0:3.7"
+                                      Value="0">
+                    <EasingDoubleKeyFrame.EasingFunction>
+                        <CubicEase EasingMode="EaseIn" />
+                    </EasingDoubleKeyFrame.EasingFunction>
+                </EasingDoubleKeyFrame>
+            </DoubleAnimationUsingKeyFrames>
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.TranslateY)"
+                                           Storyboard.TargetName="Root">
+                <EasingDoubleKeyFrame KeyTime="0:0:0.4"
+                                      Value="0">
+                    <EasingDoubleKeyFrame.EasingFunction>
+                        <CubicEase EasingMode="EaseOut" />
+                    </EasingDoubleKeyFrame.EasingFunction>
+                </EasingDoubleKeyFrame>
+                <EasingDoubleKeyFrame KeyTime="0:0:3.4"
+                                      Value="0" />
+                <EasingDoubleKeyFrame KeyTime="0:0:3.7"
+                                      Value="-72">
+                    <EasingDoubleKeyFrame.EasingFunction>
+                        <CubicEase EasingMode="EaseIn" />
+                    </EasingDoubleKeyFrame.EasingFunction>
+                </EasingDoubleKeyFrame>
+            </DoubleAnimationUsingKeyFrames>
+        </Storyboard>
+        <Storyboard x:Name="HideAnimation">
+            <DoubleAnimation Duration="0:0:0.3"
+                             To="0"
+                             Storyboard.TargetProperty="(UIElement.Opacity)"
+                             Storyboard.TargetName="Root"
+                             d:IsOptimized="True">
+                <DoubleAnimation.EasingFunction>
+                    <CubicEase EasingMode="EaseIn" />
+                </DoubleAnimation.EasingFunction>
+            </DoubleAnimation>
+            <DoubleAnimation Duration="0:0:0.3"
+                             To="-72"
+                             Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.TranslateY)"
+                             Storyboard.TargetName="Root"
+                             d:IsOptimized="True">
+                <DoubleAnimation.EasingFunction>
+                    <CubicEase EasingMode="EaseIn" />
+                </DoubleAnimation.EasingFunction>
+            </DoubleAnimation>
+        </Storyboard>
+    </UserControl.Resources>
+
+    <Grid x:Name="Root"
+          Background="{x:Bind Background, Mode=OneWay}"
+          Padding="16,24"
+          VerticalAlignment="{x:Bind VerticalAlignment, Mode=OneWay}"
+          RenderTransformOrigin="0.5,0.5"
+          Opacity="0">
+        <Grid.RenderTransform>
+            <CompositeTransform TranslateY="-72" />
+        </Grid.RenderTransform>
+        <TextBlock x:Name="MessageText"
+                   Text="{x:Bind Message, Mode=OneWay}"
+                   HorizontalAlignment="Center"
+                   VerticalAlignment="Center"
+                   Foreground="{x:Bind Foreground, Mode=OneWay}"
+                   FontSize="{ThemeResource TextStyleLargeFontSize}"
+                   FontWeight="Bold" />
+    </Grid>
+</UserControl>
